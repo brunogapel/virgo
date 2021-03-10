@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    entry: './src/index.tsx',
+    entry: './src/app.tsx',
     devtool: 'inline-source-map',
     module: {
         rules: [
@@ -15,6 +15,16 @@ module.exports = {
     },
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
+        fallback: {
+            assert: require.resolve("assert/"),
+            buffer: require.resolve("buffer/"),
+            crypto: require.resolve("crypto-browserify"),
+            http: require.resolve("stream-http"),
+            path: require.resolve("path-browserify"),
+            stream: require.resolve("stream-browserify"),
+            util: require.resolve("util/"),
+            zlib: require.resolve("browserify-zlib")
+        },
     },
     output: {
         filename: 'bundle.js',
@@ -24,5 +34,6 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: './src/index.html'
         })
-    ]
+    ],
+    target: 'async-node'
 }
